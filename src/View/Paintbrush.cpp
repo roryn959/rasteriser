@@ -27,11 +27,11 @@ void Paintbrush::PaintBackground(Colour colour) {
 
 void Paintbrush::PaintAxes() {
     for (int i=0; i<WINDOW_W; ++i) {
-        m_zBuffer.Set(i, WINDOW_H / 2, 0, COLOUR_BLACK);
+        m_zBuffer.Set(i, WINDOW_H / 2, 0.1f, COLOUR_BLACK);
     }
 
     for (int i=0; i<WINDOW_H; ++i) {
-        m_zBuffer.Set(WINDOW_W / 2, i, 0, COLOUR_BLACK);
+        m_zBuffer.Set(WINDOW_W / 2, i, 0.1f, COLOUR_BLACK);
     }
 }
 
@@ -123,6 +123,7 @@ void Paintbrush::PaintTriangle(Triangle triangle) {
         std::swap(v1x, v2x);
         std::swap(v1y, v2y);
         std::swap(v1z, v2z);
+        area *= -1;
     }
 
     PaintLine( {triangle[0], triangle[1]}, COLOUR_BLACK );

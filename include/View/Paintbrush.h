@@ -30,6 +30,7 @@ class Paintbrush {
         inline int Get1dPosition(int x, int y) { return y * m_width + x; }
 
         void Set(int x, int y, float z, Colour colour) {
+            if (z <= 0) return;
             int position = Get1dPosition(x, y);
             if (z < m_distances[position]) {
                 m_buffer[position] = colour;
