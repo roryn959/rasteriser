@@ -6,10 +6,12 @@ World::World(Paintbrush& paintbrush) :
     m_triangleBasedPyramids{},
     m_xVelocity{0},
     m_yVelocity{0},
-    m_zVelocity{0}
+    m_zVelocity{0},
+    m_xRotationVelocity{0},
+    m_yRotationVelocity{0}
 {
-    TriangleBasedPyramid tbp1{ {-1.75, 0, 2.5}, {-1.5, 0.25, 2.5}, {-1.25, 0, 2.5}, {-1.45, 0.05, 1.5}, COLOUR_GREEN};
-    TriangleBasedPyramid tbp2{ {0.05, 0, 2.5}, {0.2, 0.25, 2.5}, {0.45, 0, 2.5}, {0.25, 0.05, 1.5}, COLOUR_GREEN};
+    TriangleBasedPyramid tbp1{ {-1.75, 0, 2.5}, {-1.5, 0.25, 2.5}, {-1.25, 0, 2.5}, {-1.45, 0.05, 1.5}, COLOUR_RED};
+    TriangleBasedPyramid tbp2{ {0.05, 0, 2.5}, {0.2, 0.25, 2.5}, {0.45, 0, 2.5}, {0.25, 0.05, 1.5}, COLOUR_BLUE};
     TriangleBasedPyramid tbp3{ {1.45, 0.05, 4}, {1.25, 0, 2.5}, {1.5, 0.25, 2.5}, {1.75, 0, 2.5}, COLOUR_GREEN};
 
     m_triangleBasedPyramids.push_back(tbp1);
@@ -55,10 +57,23 @@ void World::MovePovZ(float dz) {
 
 }
 
+void World::RotatePovX(float theta) {
+    for (TriangleBasedPyramid& triangleBasedPyramid : m_triangleBasedPyramids)
+        triangleBasedPyramid.RotateAroundX(theta);
+}
+
+void World::RotatePovY(float theta) {
+    for (TriangleBasedPyramid& triangleBasedPyramid : m_triangleBasedPyramids)
+        triangleBasedPyramid.RotateAroundY(theta);
+}
+
 void World::ProcessTimeTick(float dt) {
     MovePovX(m_xVelocity * (dt / WORLD_SPEED));
     MovePovY(m_yVelocity * (dt / WORLD_SPEED));
     MovePovZ(m_zVelocity * (dt / WORLD_SPEED));
+
+    RotatePovX(m_xRotationVelocity * (dt / WORLD_SPEED) * LOOK_SENSITIVITY);
+    RotatePovY(m_yRotationVelocity * (dt / WORLD_SPEED) * LOOK_SENSITIVITY);
 }
 
 void World::MoveRight() {
@@ -113,4 +128,40 @@ void World::UnMoveUp() {
 
 void World::UnMoveDown() {
     if (m_yVelocity == -1) m_yVelocity = 0;
+}
+
+void World::RotateUp() {
+    if (m_xRotationVelocity == 1) return;
+    m_xRotationVelocity = -1;
+}
+
+void World::RotateDown() {
+    if (m_xRotationVelocity == -1) return;
+    m_xRotationVelocity = 1;
+}
+
+void World::RotateRight() {
+    if (m_yRotationVelocity == -1) return;
+    m_yRotationVelocity = 1;
+}
+
+void World::RotateLeft() {
+    if (m_yRotationVelocity == 1) return;
+    m_yRotationVelocity = -1;
+}
+
+void World::UnRotateUp() {
+    if (m_xRotationVelocity == -1) m_xRotationVelocity = 0;
+}
+
+void World::UnRotateDown() {
+    if (m_xRotationVelocity == 1) m_xRotationVelocity = 0;
+}
+
+void World::UnRotateRight() {
+    if (m_yRotationVelocity == 1) m_yRotationVelocity = 0;
+}
+
+void World::UnRotateLeft() {
+    if (m_yRotationVelocity == -1) m_yRotationVelocity = 0;
 }

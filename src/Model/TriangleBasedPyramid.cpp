@@ -35,21 +35,21 @@ void TriangleBasedPyramid::UpdateTriangles() {
 }
 
 void TriangleBasedPyramid::ShiftX(float dx) {
-    for (Point &point : m_points)
+    for (Point& point : m_points)
         point.m_x += dx;
 
     m_centreOfMass.m_x += dx;
 }
 
 void TriangleBasedPyramid::ShiftY(float dy) {
-    for (Point &point : m_points)
+    for (Point& point : m_points)
         point.m_y += dy;
 
     m_centreOfMass.m_y += dy;
 }
 
 void TriangleBasedPyramid::ShiftZ(float dz) {
-    for (Point &point : m_points)
+    for (Point& point : m_points)
         point.m_z += dz;
 
     m_centreOfMass.m_z += dz;
@@ -65,7 +65,7 @@ void TriangleBasedPyramid::RotateOnX(float theta) {
     };
 
     for (int i = 0; i < 4; ++i) {
-        Point &point = m_points[i];
+        Point& point = m_points[i];
         point = point - m_centreOfMass;
         point = Rx * point;
         point = point + m_centreOfMass;
@@ -83,7 +83,7 @@ void TriangleBasedPyramid::RotateOnY(float theta) {
     };
 
     for (int i = 0; i < 4; ++i) {
-        Point &point = m_points[i];
+        Point& point = m_points[i];
         point = point - m_centreOfMass;
         point = Ry * point;
         point = point + m_centreOfMass;
@@ -101,10 +101,40 @@ void TriangleBasedPyramid::RotateOnZ(float theta) {
     };
 
     for (int i = 0; i < 4; ++i) {
-        Point &point = m_points[i];
+        Point& point = m_points[i];
         point = point - m_centreOfMass;
         point = Rz * point;
         point = point + m_centreOfMass;
     }
 
+}
+
+void TriangleBasedPyramid::RotateAroundX(float theta) {
+    float c = std::cos(theta), s = std::sin(theta);
+
+    Matrix<float, 3, 3> Rx{
+        { 1, 0, 0 },
+        { 0, c, -s },
+        { 0, s, c }
+    };
+
+    for (int i = 0; i < 4; ++i) {
+        Point& point = m_points[i];
+        point = Rx * point;
+    }
+}
+
+void TriangleBasedPyramid::RotateAroundY(float theta) {
+    float c = std::cos(theta), s = std::sin(theta);
+
+    Matrix<float, 3, 3> Ry{
+        { c, 0, s },
+        { 0, 1, 0 },
+        { -s, 0, c}
+    };
+
+    for (int i = 0; i < 4; ++i) {
+        Point& point = m_points[i];
+        point = Ry * point;
+    }
 }

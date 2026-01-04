@@ -7,6 +7,7 @@
 #include "View/Paintbrush.h"
 
 #define WORLD_SPEED 1.0
+#define LOOK_SENSITIVITY 2.0
 
 class World {
 public:
@@ -17,6 +18,9 @@ public:
     void MovePovX(float dx);
     void MovePovY(float dy);
     void MovePovZ(float dz);
+
+    void RotatePovX(float theta);
+    void RotatePovY(float theta);
 
     void ProcessTimeTick(float dt);
 
@@ -34,6 +38,16 @@ public:
     void UnMoveUp();
     void UnMoveDown();
 
+    void RotateUp();
+    void RotateDown();
+    void RotateRight();
+    void RotateLeft();
+
+    void UnRotateUp();
+    void UnRotateDown();
+    void UnRotateRight();
+    void UnRotateLeft();
+
 private:
     Paintbrush&                         m_paintbrush;
 
@@ -43,5 +57,8 @@ private:
     float                               m_xVelocity;
     float                               m_yVelocity;
     float                               m_zVelocity;    
+
+    float                               m_xRotationVelocity;
+    float                               m_yRotationVelocity;
 
 };

@@ -34,6 +34,22 @@ void handle_keydown(World& world, SDL_Event& event) {
         case SDLK_e:
             world.MoveDown();
             break;
+
+        case SDLK_LEFT:
+            world.RotateRight();
+            break;
+        
+        case SDLK_RIGHT:
+            world.RotateLeft();
+            break;
+
+        case SDLK_UP:
+            world.RotateDown();
+            break;
+        
+        case SDLK_DOWN:
+            world.RotateUp();
+            break;
         
         default:
             break;
@@ -64,6 +80,22 @@ void handle_keyup(World& world, SDL_Event& event) {
         
         case SDLK_e:
             world.UnMoveDown();
+            break;
+        
+        case SDLK_LEFT:
+            world.UnRotateRight();
+            break;
+        
+        case SDLK_RIGHT:
+            world.UnRotateLeft();
+            break;
+
+        case SDLK_UP:
+            world.UnRotateDown();
+            break;
+        
+        case SDLK_DOWN:
+            world.UnRotateUp();
             break;
         
         default:
@@ -110,7 +142,7 @@ void mainloop(Canvas& canvas, Paintbrush& paintbrush) {
 
         // Painting
         paintbrush.PaintBackground(COLOUR_WHITE);
-        paintbrush.PaintAxes();
+        //paintbrush.PaintAxes();
 
         world.Paint();
 

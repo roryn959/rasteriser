@@ -34,6 +34,9 @@ public:
     void RotateOnY(float theta);
     void RotateOnZ(float theta);
 
+    void RotateAroundX(float theta);
+    void RotateAroundY(float theta);
+
 private:
     void UpdateTriangles();
 
